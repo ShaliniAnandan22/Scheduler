@@ -4,19 +4,21 @@
       <div class="sidebar-class">
         <div>
           <div class="table-sidebar-header">{{ sidebarHeader }}</div>
-          <div
-            v-for="(sidebarItem, index) in sidebarListArray"
-            :key="`sidebar-${index}`"
-            class="table-sidebar-content"
-            :style="getBlockHeight(sidebarItem.name)"
-            @click="pinSideBarElement(sidebarItem)"
-          >
-            <div class="sidebar-content-item">
-              <img
-                src="../assets/anchor.svg"
-                :class="{ pinned: sidebarItem.pinned }"
-              />
-              {{ sidebarItem.name }}
+          <div>
+            <div
+              v-for="(sidebarItem, index) in sidebarListArray"
+              :key="`sidebar-${index}`"
+              class="table-sidebar-content"
+              :style="getBlockHeight(sidebarItem.name)"
+              @click="pinSideBarElement(sidebarItem)"
+            >
+              <div class="sidebar-content-item">
+                <img
+                  src="../assets/anchor.svg"
+                  :class="{ pinned: sidebarItem.pinned }"
+                />
+                {{ sidebarItem.name }}
+              </div>
             </div>
           </div>
         </div>
@@ -39,59 +41,49 @@
             </div>
           </div>
 
-          <div v-for="(rowEventDetails, name) in eventListArray" :key="name">
-            <!-- presentation -->
-            <template v-for="rowEvent in rowEventDetails">
-              <div
-                :key="rowEvent.index"
-                v-if="rowEvent"
-                class="position-relative"
-              >
+          <div>
+            <div v-for="(rowEventDetails, name) in eventListArray" :key="name">
+              <!-- presentation -->
+              <template v-for="rowEvent in rowEventDetails">
                 <div
-                  :index="rowEvent.index"
-                  class="position-relative table-header-grid"
-                  @mousemove.stop="handleEvents($event, 'mousemove', {})"
-                  @mouseup.stop="handleEvents($event, 'mouseup', {})"
+                  :key="rowEvent.index"
+                  v-if="rowEvent"
+                  class="position-relative"
                 >
                   <div
-                    v-for="(event, eventIdx) in rowEvent.eventList"
-                    :key="`day-event-${eventIdx}`"
-                    class="table-grid"
-                    @click="blockClicked(rowEvent.sidebarScope, eventIdx)"
-                    v-bind="
-                      bindElementDetails(
-                        eventIdx,
-                        rowEvent.sidebarScope,
-                        rowEvent.index
-                      )
-                    "
-                    :style="getBlockHeight(rowEvent.sidebarScope)"
+                    :index="rowEvent.index"
+                    class="position-relative table-header-grid"
+                    @mousemove.stop="handleEvents($event, 'mousemove', {})"
+                    @mouseup.stop="handleEvents($event, 'mouseup', {})"
                   >
-                    <template v-if="event.dayEvents.length">
-                      <div
-                        v-for="(eventItem, eventItemIdx) in event.dayEvents"
-                        :key="`${eventItem.name}-${eventItemIdx}`"
-                        @click="eventClicked(eventItem)"
-                        :draggable="!isResized && eventItem.startScope"
-                        :class="applyClass(eventItem, rowEvent)"
-                        :style="
-                          calculateStyle(
-                            eventItem,
-                            eventIdx,
-                            rowEvent.sidebarScope
-                          )
-                        "
-                        v-bind="
-                          bindElementDetails(
-                            eventIdx,
-                            rowEvent.sidebarScope,
-                            rowEvent.index,
-                            eventItem.name
-                          )
-                        "
-                      >
+                    <div
+                      v-for="(event, eventIdx) in rowEvent.eventList"
+                      :key="`day-event-${eventIdx}`"
+                      class="table-grid"
+                      @click="blockClicked(rowEvent.sidebarScope, eventIdx)"
+                      v-bind="
+                        bindElementDetails(
+                          eventIdx,
+                          rowEvent.sidebarScope,
+                          rowEvent.index
+                        )
+                      "
+                      :style="getBlockHeight(rowEvent.sidebarScope)"
+                    >
+                      <template v-if="event.dayEvents.length">
                         <div
-                          class="text-overflow-ellipsis event-resize"
+                          v-for="(eventItem, eventItemIdx) in event.dayEvents"
+                          :key="`${eventItem.name}-${eventItemIdx}`"
+                          @click="eventClicked(eventItem)"
+                          :draggable="!isResized && eventItem.startScope"
+                          :class="applyClass(eventItem, rowEvent)"
+                          :style="
+                            calculateStyle(
+                              eventItem,
+                              eventIdx,
+                              rowEvent.sidebarScope
+                            )
+                          "
                           v-bind="
                             bindElementDetails(
                               eventIdx,
@@ -101,6 +93,17 @@
                             )
                           "
                         >
+                          <!-- <div
+                            class="text-overflow-ellipsis event-resize"
+                            v-bind="
+                              bindElementDetails(
+                                eventIdx,
+                                rowEvent.sidebarScope,
+                                rowEvent.index,
+                                eventItem.name
+                              )
+                            "
+                          > -->
                           <div
                             class="resize-div"
                             v-bind="
@@ -178,17 +181,19 @@
                               )
                             "
                           ></div>
+                          <!-- </div> -->
                         </div>
-                      </div>
-                    </template>
+                      </template>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </template>
+              </template>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <div style="position: sticky;z-index: 1;right: 0px;background: white;">
       <div
         v-if="showUnScheduledEvents"
@@ -280,6 +285,9 @@ export default {
       sidebarList: [
         { name: "Floor 1", pinned: false },
         { name: "Floor 2", pinned: false },
+        { name: "Floor 3", pinned: false },
+        { name: "Floor 4", pinned: false },
+        { name: "Floor 5", pinned: false },
         { name: "Yem", pinned: false },
       ],
       eventsArray: {
@@ -325,6 +333,9 @@ export default {
           },
         ],
         Yem: [{ name: "Event 3", start: 1632400200000, end: 1632594599999 }],
+        "Floor 3": [],
+        "Floor 4": [],
+        "Floor 5": [],
       },
       eventList: [],
       eventPositions: {},
@@ -526,7 +537,7 @@ export default {
       let { sidebarScope } = rowEvent || {}
 
       return [
-        "event-class",
+        "event-class text-overflow-ellipsis d-flex",
         !startScope && "transparent",
         isResized && "resize",
         !startScope &&
@@ -814,9 +825,8 @@ export default {
         (event) => {
           // store a ref. on the dragged elem
           if (
-            ["unscheduled-event", "event-class"].includes(
-              event.target.className
-            )
+            event.target.className.includes("event-class") ||
+            event.target.className.includes("unscheduled-event")
           ) {
             dragged = event.target
             // make it half transparent

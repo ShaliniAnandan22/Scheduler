@@ -11,7 +11,9 @@
     <!-- <TestScroller></TestScroller> -->
     <!-- <Approach4></Approach4> -->
     <!-- <Approach5></Approach5> -->
-    <HtmlDragEvents></HtmlDragEvents>
+    <Approach6></Approach6>
+    <!-- <Approach7></Approach7> -->
+    <!-- <ScrollExample></ScrollExample> -->
   </div>
 </template>
 
@@ -26,7 +28,9 @@
 // import DraggableResize from "./components/DraggableResize.vue"
 // import Approach4 from "./components/Approach4.vue"
 // import Approach5 from "./components/Approach5.vue"
-import HtmlDragEvents from "./components/Approch6DragEvents"
+import Approach6 from "./components/Approch6DragEvents"
+// import Approach7 from "./components/Approach7.vue"
+// import ScrollExample from "./components/ScrollExample2.vue"
 
 export default {
   name: "App",
@@ -41,7 +45,9 @@ export default {
     // DraggableResize,
     // Approach4,
     // Approach5,
-    HtmlDragEvents,
+    Approach6,
+    // Approach7,
+    // ScrollExample,
   },
 }
 </script>
@@ -53,6 +59,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 </style>
